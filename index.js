@@ -6,58 +6,51 @@ const io = require('socket.io')(http);
 const uuid = require('uuid/v1');
 const port = process.env.PORT || 8080;
 const axios = require('axios');
+const npmRun = require('npm-run');
+const apiai = require('apiai');
+
+const bot = apiai('7d13e108ae484b8e872f084bbd97253e');
 
 app.use(compression());
 
 app.use(express.static('./build'));
 
+app.get('/build', (req, res) => {
+  npmRun.exec('react-scripts build', (err, out, derr) => {
+    res.send(err, out, derr)
+  });
+})
+
 app.get('*', (req, res) => {
     res.send('./build');
-});
-
-const instance = axios.create({
-    headers: {
-        Authorization: "Bearer 3d1f3404e25c436e9c38d41ee33fc3a5",
-        'Content-Type': "application/json; charset=utf-8"
-    }
 });
 
 io.on('connection', (socket) => {
     console.log(socket.id);
     socket.on('chat message', function(msg){
+        
         let obj = {
             id: uuid(),
             sender: 'user',
             msg: msg
         };
         socket.emit('chat message', obj);
-        api(msg, 'abces')
-            .then(data => {
-                let obj = {
+        const request = bot.textRequest(msg, {sessionId: socket.id});
+        request.on('response', (response) => {
+          let obj = {
                     id: uuid(),
                     sender: 'user',
-                    msg: data.speech
+                    msg: response.result.fulfillment.speech
                 };
-                socket.emit('chat message', obj);
-            })
-            .catch(err => console.log(err));
-    });
+          socket.emit('chat message', obj);
+          console.log(response)
+        });
+        request.on('error', err => console.log(err));
+        request.end();
+        
+    }); 
 });
 
-const api = (msg, id) => {
-    return new Promise((resolve, reject) => {
-        const post = {
-            query: [msg],
-            sessionId: id,
-            lang: 'en'
-        };
-
-        instance.post('https://api.api.ai/v1/query?v=20170530', post)
-            .then(res => resolve(res.data.result.fulfillment))
-            .catch(err => reject(err.message));
-    });
-
-};
 
 http.listen(port, () => {
     console.log('listening on port ', port);
