@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
         request.on('response', (response) => {
             let obj = {
                 id: uuid(),
-                sender: 'user',
+                sender: 'bot',
                 msg: response.result.fulfillment.speech
             };
             socket.emit('chat message', obj);
