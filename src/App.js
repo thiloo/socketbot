@@ -33,9 +33,9 @@ class App extends Component {
     render() {
         console.log(this.state.messages);
         return (
-            <div>
-                <SendBox getMessage={this.handleMessage}/>
+            <div className="container">
                 <MessagesContainer messages={this.state.messages} />
+                <SendBox getMessage={this.handleMessage}/>
             </div>
         );
     }

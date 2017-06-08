@@ -2,7 +2,10 @@ import React from 'react';
 
 const BotMessage = (props) => {
     return (
-        <div>{props.msg.msg}</div>
+        <div className="messageWrapper">
+            <div className="message botMessage">{props.msg.msg}</div>
+        </div>
+
     );
 };
 

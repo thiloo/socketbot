@@ -1,10 +1,12 @@
 import React from 'react';
 
 const UserMessage = (props) => {
-    console.log(props.msg);
     return (
-        <div>{props.msg.msg}</div>
-        
+        <div className="messageWrapper">
+            <div className="message userMessage">{props.msg.msg}</div>
+        </div>
+
+
     );
 };
 

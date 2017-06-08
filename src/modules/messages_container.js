@@ -10,13 +10,12 @@ class MessagesContainer extends Component {
             } else if (msg.sender === 'bot') {
                 return <BotMessage key={msg.id} msg={msg} />;
             }
-
         });
     }
 
     render() {
         return (
-            <div>
+            <div className="messageContainer">
                 {this.renderMessages()}
             </div>
         );

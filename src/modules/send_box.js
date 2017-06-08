@@ -26,7 +26,7 @@ class SendBox extends Component {
     render() {
         return (
             <div>
-                <textarea value={this.state.message} onChange={this.handleChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)}></textarea>
+                <textarea className="textInput" value={this.state.message} onChange={this.handleChange.bind(this)} onKeyDown={this.handleKeyDown.bind(this)}></textarea>
             </div>
         );
     }

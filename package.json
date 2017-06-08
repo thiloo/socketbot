@@ -29,6 +29,7 @@
   },
   "scripts": {
     "start": "node .",
+    "react-start": "concurrently \"PORT=8080 react-scripts start\" \"PORT=8081 babel-watch index.js\"",
     "build": "react-scripts build"
   },
   "babel": {
