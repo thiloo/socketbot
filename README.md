@@ -12,3 +12,9 @@ it needs a proxy set to the same localhost as specified in react-start
 ```
 
 requires a proxy set to `http://localhost:8081` for socket.io to work.
+
+To run an env variable for the APIAI_KEY is required. Add a file called .env in the root directory, add your key by declaring
+
+```
+APIAI_KEY=<your token>
+```
