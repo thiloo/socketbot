@@ -13,6 +13,11 @@ class MessagesContainer extends Component {
         });
     }
 
+    componentDidUpdate() {
+        const messageContainer = document.querySelector('.messageContainer');
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+
     render() {
         return (
             <div className="messageContainer">
